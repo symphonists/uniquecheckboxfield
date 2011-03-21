@@ -88,7 +88,7 @@
 		}
 		
 		public function displaySettingsPanel(&$wrapper, $errors = null) {
-			parent::displaySettingsPanel($wrapper);
+			parent::displaySettingsPanel($wrapper, $errors);
 			
 			$order = $this->get('sortorder');
 			
