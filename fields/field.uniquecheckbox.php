@@ -16,7 +16,7 @@
 		public function createTable() {
 			$field_id = $this->get('id');
 			
-			return $this->_engine->Database->query("
+			return Symphony::Database()->query("
 				CREATE TABLE IF NOT EXISTS `tbl_entries_data_{$field_id}` (
 					`id` int(11) unsigned NOT NULL auto_increment,
 					`entry_id` int(11) unsigned NOT NULL,
@@ -216,7 +216,7 @@
 			
 			if ($data == 'yes') {
 				$allowed = (integer)$this->get('unique_entries');
-				$taken = (integer)$this->Database->fetchVar('taken', 0, "
+				$taken = (integer)Symphony::Database()->fetchVar('taken', 0, "
 					SELECT
 						COUNT(f.id) AS `taken`
 					FROM
@@ -228,7 +228,7 @@
 				
 				// Steal from another entry:
 				if ($taken >= $allowed and $this->get('unique_steal') == 'on') {
-					$this->Database->query("
+					Symphony::Database()->query("
 						UPDATE
 							`tbl_entries_data_{$field_id}`
 						SET
@@ -283,7 +283,7 @@
 				'unique_steal'		=> ($steal ? $steal : 'off')
 			);
 			
-			$this->_engine->Database->query("
+			Symphony::Database()->query("
 				DELETE FROM
 					`tbl_fields_{$handle}`
 				WHERE
@@ -291,7 +291,7 @@
 				LIMIT 1
 			");
 			
-			return $this->_engine->Database->insert($fields, "tbl_fields_{$handle}");
+			return Symphony::Database()->insert($fields, "tbl_fields_{$handle}");
 		}
 	}
 	
