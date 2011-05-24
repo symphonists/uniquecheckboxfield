@@ -16,11 +16,11 @@
 		}
 		
 		public function uninstall() {
-			$this->_Parent->Database->query("DROP TABLE `tbl_fields_uniquecheckbox`");
+			Symphony::Database()->query("DROP TABLE `tbl_fields_uniquecheckbox`");
 		}
 		
 		public function install() {
-			return $this->_Parent->Database->query("
+			return Symphony::Database()->query("
 				CREATE TABLE IF NOT EXISTS `tbl_fields_uniquecheckbox` (
 					`id` int(11) unsigned NOT NULL auto_increment,
 					`field_id` int(11) unsigned NOT NULL,
