@@ -179,7 +179,7 @@
 					`tbl_entries_data_{$field_id}` AS ed
 					ON (e.id = ed.entry_id)
 			";
-			$sort = 'ORDER BY ' . (strtolower($order) == 'random' ? 'RAND()' : "ed.value {$order}");
+			$sort = 'ORDER BY ' . (strtolower($order) == 'random' ? 'RAND()' : "ed.order {$order}");
 		}
 		
 		public function buildDSRetrivalSQL($data, &$joins, &$where, $andOperation = false) {
