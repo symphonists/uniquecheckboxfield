@@ -1,9 +1,6 @@
 # Field: Unique Checkbox
 
-* Version: 1.1
-* Author: Rowan Lewis <rowan@pixelcarnage.com>
-* Build Date: 27th September 2008
-* Requirements: Symphony Beta revision 5 or greater.
+Restrict the number of entries that can be checked
 
 
 ## Installation
