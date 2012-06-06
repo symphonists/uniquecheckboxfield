@@ -7,9 +7,8 @@
 		Field definition:
 	-------------------------------------------------------------------------*/
 		
-		public function __construct(&$parent) {
-			parent::__construct($parent);
-			
+		public function __construct() {
+			parent::__construct();
 			$this->_name = 'Unique Checkbox';
 		}
 		
@@ -93,7 +92,7 @@
 			$order = $this->get('sortorder');
 			
 			$div = new XMLElement('div');
-			$div->setAttribute('class', 'group');
+			$div->setAttribute('class', 'two columns');
 			
 			// Long Description:
 			$this->appendInput($div, 'Long Description <i>Optional</i>', 'description');
@@ -104,7 +103,7 @@
 			$wrapper->appendChild($div);
 			
 			$div = new XMLElement('div');
-			$div->setAttribute('class', 'group');
+			$div->setAttribute('class', 'two columns');
 			
 			// Default State:
 			$this->appendCheckbox($div, 'Checked by default', 'default_state');
@@ -123,6 +122,7 @@
 			$label->appendChild(Widget::Input(
 				"fields[{$order}][{$name}]", $this->get($name)
 			));
+			$label->setAttribute('class', 'column');
 			
 			$wrapper->appendChild($label);
 		}
@@ -137,6 +137,7 @@
 			if ($this->get($name) == 'on') $input->setAttribute('checked', 'checked');
 			
 			$label->setValue($input->generate() . " {$title}");
+			$label->setAttribute('class', 'column');
 			$wrapper->appendChild($label);
 		}
 		
@@ -171,18 +172,25 @@
 			return $groups;
 		}
 		
-		public function buildSortingSQL(&$joins, &$where, &$sort, $order = 'ASC') {
-			$field_id = $this->get('id');
-			
-			$joins .= "
-				INNER JOIN
-					`tbl_entries_data_{$field_id}` AS ed
-					ON (e.id = ed.entry_id)
-			";
-			$sort = 'ORDER BY ' . (strtolower($order) == 'random' ? 'RAND()' : "ed.order {$order}");
+		public function buildSortingSQL(&$joins, &$where, &$sort, $order='ASC'){
+			if(in_array(strtolower($order), array('random', 'rand'))) {
+				$sort = 'ORDER BY RAND()';
+			}
+			else {
+				$sort = sprintf(
+					'ORDER BY (
+						SELECT %s
+						FROM tbl_entries_data_%d AS `ed`
+						WHERE entry_id = e.id
+					) %s',
+					'`ed`.value',
+					$this->get('id'),
+					$order
+				);
+			}
 		}
 		
-		public function buildDSRetrivalSQL($data, &$joins, &$where, $andOperation = false) {
+		public function buildDSRetrievalSQL($data, &$joins, &$where, $andOperation = false) {
 			$field_id = $this->get('id');
 			$value = $this->cleanValue($data[0]);
 			
@@ -254,7 +262,7 @@
 			return parent::checkPostFieldData($data, $message, $entry_id);
 		}
 		
-		public function processRawFieldData($data, &$status, $simulate = false, $entry_id = null) {
+		public function processRawFieldData($data, &$status, &$message=null, $simulate = false, $entry_id = null) {
 			$status = self::__OK__;
 			
 			return array(

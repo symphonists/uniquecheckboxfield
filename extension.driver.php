@@ -1,19 +1,6 @@
 <?php
 	
 	class Extension_UniqueCheckboxField extends Extension {
-		public function about() {
-			return array(
-				'name'			=> 'Field: Unique Checkbox',
-				'version'		=> '1.1',
-				'release-date'	=> '2008-09-27',
-				'author'		=> array(
-					'name'			=> 'Rowan Lewis',
-					'website'		=> 'http://pixelcarnage.com/',
-					'email'			=> 'rowan@pixelcarnage.com'
-				),
-				'description' => 'Allows you to flag one or more entries as special.'
-			);
-		}
 		
 		public function uninstall() {
 			Symphony::Database()->query("DROP TABLE `tbl_fields_uniquecheckbox`");
