@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension id="uniquecheckboxfield" status="released" xmlns="http://symphony-cms.com/schemas/extension/1.0">
+<extension id="uniquecheckboxfield" status="released" xmlns="http://getsymphony.com/schemas/extension/1.0">
 	<name>Unique Checkbox Field</name>
 	<description>Restrict the number of entries that can be checked.</description>
 	<repo type="github">https://github.com/symphonists/uniquecheckboxfield</repo>
-	<url type="discuss">http://symphony-cms.com/discuss/thread/445/</url>
+	<url type="discuss">http://getsymphony.com/discuss/thread/445/</url>
 	<types>
 		<type>Field Types</type>
 	</types>
@@ -17,7 +17,12 @@
 		</author>
 	</authors>
 	<releases>
-		<release version="1.1" date="2008-09-27" min="2.0" max="2.2.x" />
-		<release version="1.2" date="2012-06-06" min="2.3" />
+		<release version="1.3" date="2015-11-15" min="2.6" max="2.6.x">
+			- Changed base class to `FieldCheckbox`
+			- Drop `description`, it's already handled by the field label
+			- Support Symphony 2.6+
+		</release>
+		<release version="1.2" date="2012-06-06" min="2.3" max="2.6" />
+		<release version="1.1" date="2008-09-27" min="2.0" max="2.2.5" />
 	</releases>
 </extension>
